@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy 3 Months!💕</title>
+
+  <style>
+    :root{
+      --bg1:#ffb6c1;
+      --bg2:#ff5fa2;
+      --card:#ffffffee;
+      --text:#2a0f1f;
+      --accent:#ff2d78;
+      --accent2:#7a1cff;
+      --shadow: 0 20px 60px rgba(0,0,0,.18);
+      --radius: 26px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+      background: radial-gradient(circle at 20% 10%, #fff 0%, var(--bg1) 28%, var(--bg2) 100%);
+      min-height:100vh;
+    }
+
+    #hearts{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+      overflow:hidden;
+    }
+
+    .heart{
+      position:absolute;
+      width:18px;
+      height:18px;
+      transform: rotate(45deg);
+      opacity:.75;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+      animation: floatUp linear forwards;
+    }
+
+    .heart::before,
+    .heart::after{
+      content:"";
+      position:absolute;
+      width:18px;
+      height:18px;
+      background: currentColor;
+      border-radius:50%;
+    }
+
+    .heart::before{
+      left:-9px;
+      top:0;
+    }
+
+    .heart::after{
+      left:0;
+      top:-9px;
+    }
+
+    @keyframes floatUp{
+      from{
+        transform:translateY(0) rotate(45deg) scale(var(--s));
+      }
+
+      to{
+        transform:translateY(-120vh) rotate(45deg) scale(var(--s));
+        opacity:0;
+      }
+    }
+
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 16px 80px;
+    }
+
+    .glass{
+      background:var(--card);
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow:var(--shadow);
+      border-radius:var(--radius);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .screen{
+      display:none;
+      padding:26px;
+    }
+
+    .screen.active{
+      display:block;
+      animation: pop .35s ease;
+    }
+
+    @keyframes pop{
+      from{
+        transform: translateY(10px) scale(.98);
+        opacity:.0;
+      }
+
+      to{
+        transform: translateY(0) scale(1);
+        opacity:1;
+      }
+    }
+
+    h1,h2{
+      margin:0 0 10px;
+      letter-spacing:-.02em;
+    }
+
+    h1{
+      font-size: clamp(28px, 4vw, 44px);
+    }
+
+    h2{
+      font-size: clamp(20px, 3vw, 28px);
+    }
+
+    p{
+      margin:10px 0;
+      line-height:1.55;
+      font-size:16.5px;
+    }
+
+    .topTag{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.65);
+      border:1px solid rgba(255,255,255,.75);
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    .btnRow{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    button{
+      border:none;
+      border-radius:16px;
+      padding:12px 16px;
+      font-weight:800;
+      font-size:15.5px;
+      cursor:pointer;
+      transition:.18s transform, .18s filter, .18s opacity;
+      box-shadow: 0 12px 26px rgba(0,0,0,.12);
+    }
+
+    button:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    button:active{
+      transform: translateY(1px) scale(.99);
+    }
+
+    .primary{
+      background: linear-gradient(135deg, var(--accent), #ff7ab7);
+      color:white;
+    }
+
+    .ghost{
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(0,0,0,.06);
+      color:#3c0c28;
+    }
+
+    .danger{
+      background: linear-gradient(135deg, #7a1cff, #ff2d78);
+      color:white;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+
+    .card{
+      padding:16px;
+      border-radius:22px;
+      background: rgba(255,255,255,.70);
+      border:1px solid rgba(0,0,0,.05);
+      box-shadow: 0 16px 36px rgba(0,0,0,.10);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card small{
+      opacity:.75;
+      font-weight:800;
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .cardTitle{
+      font-weight:900;
+      font-size:18px;
+      margin:0 0 6px;
+    }
+
+    .span6{
+      grid-column: span 6;
+    }
+
+    .span4{
+      grid-column: span 4;
+    }
+
+    .span12{
+      grid-column: span 12;
+    }
+
+    @media (max-width:760px){
+      .span6,.span4{
+        grid-column: span 12;
+      }
+
+      .screen{
+        padding:18px;
+      }
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      place-items:center;
+      padding:18px;
+      background:rgba(0,0,0,.35);
+      z-index:10;
+    }
+
+    .modal.active{
+      display:grid;
+    }
+
+    .modalInner{
+      width:min(680px, 100%);
+      padding:18px 18px 16px;
+      border-radius:24px;
+      background:rgba(255,255,255,.92);
+      box-shadow:0 28px 90px rgba(0,0,0,.30);
+      border:1px solid rgba(255,255,255,.7);
+      animation:pop .25s ease;
+    }
+
+    .modalHeader{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+    }
+
+    .x{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      font-weight:900;
+    }
+
+    .noteText{
+      white-space:pre-wrap;
+      font-size:16.5px;
+      line-height:1.65;
+      margin-top:10px;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .ph{
+      aspect-ratio:4/3;
+      border-radius:18px;
+      background:rgba(0,0,0,.08);
+      border:1px dashed rgba(0,0,0,.18);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:rgba(0,0,0,.45);
+      overflow:hidden;
+    }
+
+    .ph img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    @media (max-width:760px){
+      .gallery{
+        grid-template-columns:1fr;
+      }
+    }
+
+    #confetti{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:20;
+      overflow:hidden;
+      display:none;
+    }
+
+    .conf{
+      position:absolute;
+      width:10px;
+      height:14px;
+      opacity:.9;
+      transform:rotate(0deg);
+      animation:confettiFall linear forwards;
+      border-radius:3px;
+    }
+
+    @keyframes confettiFall{
+      from{
+        transform:translateY(-10vh) rotate(0deg);
+      }
+
+      to{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:.0;
+      }
+    }
+
+    .footerHint{
+      margin-top:16px;
+      opacity:.75;
+      font-weight:700;
+      font-size:13.5px;
+    }
+
+    .badgeRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .badge{
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.65);
+      border:1px solid rgba(0,0,0,.06);
+      font-weight:900;
+      font-size:13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="hearts"></div>
+  <div id="confetti"></div>
+
+  <div class="wrap">
+    <div class="glass">
+
+      <!-- PAGE 1 -->
+      <section class="screen active" id="s1">
+
+        <div class="topTag">💌 Anniversary message</div>
+
+        <h1>
+          Hiii <span id="gfNameTop">My angel</span> 💖
+        </h1>
+
+        <p>
+          I made you an awesome website cuz you're so perfect and deserve it.
+          Tap the button to “unlock” it baby
+        </p>
+
+        <div class="badgeRow">
+          <div class="badge">💘 100% Linda-coded</div>
+          <div class="badge">👅 made with all my love</div>
+          <div class="badge">😽 bestest girlfriend ever</div>
+        </div>
+
+        <div class="btnRow">
+          <button class="primary" onclick="go(2)">
+            Unlock 💗
+          </button>
+
+          <button class="ghost" onclick="toggleHearts()">
+            More hearts
+          </button>
+        </div>
+
+        <div class="footerHint"></div>
+
+      </section>
+
+
+      <!-- PAGE 2 -->
+      <section class="screen" id="s2">
+
+        <div class="topTag">💞 Happy Anniversary</div>
+
+        <h1>
+          <span id="gfName">My Love</span>, you’re my favourite person.
+        </h1>
+
+        <p>
+          I'm so proud of you, I adore every single thing about you, my beautiful girl.
+          I hope this makes you smile cuz you deserve it.
+        </p>
+
+
+        <div class="grid">
+
+          <div class="card span6">
+            <small>💌 A letter for my cutie</small>
+
+            <div class="cardTitle">
+              Read this when you want reassurance
+            </div>
+
+            <p id="letterText">
+              You'll always be my pretty girl, my only girl I'll ever need.
+              Even on your worst days, I'll still love you and only you.
+              You're so much more than enough for me I'm so lucky to have you.
+            </p>
+          </div>
+
+
+          <div class="card span6">
+
+            <small>You're so adorable😻</small>
+
+            <div class="cardTitle">
+              Things I want for you
+            </div>
+
+            <p>
+              1) To stay with me.
+              2) A cute smile.
+              3) To keep loving me.
+              4) A reminder that you’re my whole worldd.
+            </p>
+
+          </div>
+
+
+          <div class="card span12">
+
+            <small>Open When…</small>
+
+            <div class="cardTitle">
+              Tap a card
+            </div>
+
+
+            <div class="grid" style="margin-top:10px">
+
+              <div class="card span4"
+                   onclick="openNote('Open when you’re sad 😿', notes.sad)">
+
+                <small>Open when…</small>
+
+                <div class="cardTitle">
+                  You’re sad
+                </div>
+
+                <p>
+                  Click for comfort 💗
+                </p>
+
+              </div>
+
+
+              <div class="card span4"
+                   onclick="openNote('Open when you miss me 😼', notes.miss)">
+
+                <small>Open when…</small>
+
+                <div class="cardTitle">
+                  You miss me
+                </div>
+
+                <p>
+                  I'm stalking you 🫶
+                </p>
+
+              </div>
+
+
+              <div class="card span4"
+                   onclick="openNote('Open when you’re stressed 😰', notes.stress)">
+
+                <small>Open when…</small>
+
+                <div class="cardTitle">
+                  You’re stressed
+                </div>
+
+                <p>
+                  I love you
+                </p>
+
+              </div>
+
+
+              <div class="card span4"
+                   onclick="openNote('Open when you want kisses 👅', notes.kiss)">
+
+                <small>Open when…</small>
+
+                <div class="cardTitle">
+                  You want kisses
+                </div>
+
+                <p>
+                  MWAH MWAH MWAH
+                </p>
+
+              </div>
+
+
+              <div class="card span4"
+                   onclick="openNote('Open when you’re hungry', notes.hungry)">
+
+                <small>Open when…</small>
+
+                <div class="cardTitle">
+                  You’re hungry
+                </div>
+
+                <p>
+                  Yummy autism meals
+                </p>
+
+              </div>
+
+
+              <div class="card span4"
+                   onclick="openNote('Open when you need motivation 😽', notes.motiv)">
+
+                <small>Open when…</small>
+
+                <div class="cardTitle">
+                  You need motivation
+                </div>
+
+                <p>
+                  You’ve got this cutie
+                </p>
+
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="card span12">
+
+            <small>📸 Mini Gallery</small>
+
+            <div class="cardTitle">
+              My favourite photos
+            </div>
+
+            <p></p>
+
+            <div class="gallery">
+
+              <div class="ph">
+                <img
+                  src="https://cdn.discordapp.com/attachments/1386443583607017595/1553859768802873534/6d086362-59f7-4c87-a86a-8e34a27d4861.png?ex=6abac82e&is=6ab976ae&hm=8730f4148e4de8d0d775da3782f13fcf7592f3ced7c652aafdb8f5f01651d798&"
+                  alt="Us 1"
+                >
+              </div>
+
+              <div class="ph">
+                <img
+                  src="https://cdn.discordapp.com/attachments/1386443583607017595/1553859769389813800/IMG_1068.png?ex=6abac82e&is=6ab976ae&hm=37487638cfe7a409b59f87c342680bfebff0fdbaf19891588d8ad97ea16e6e34&"
+                  alt="Us 2"
+                >
+              </div>
+
+              <div class="ph">
+                <img
+                  src="https://cdn.discordapp.com/attachments/1386443583607017595/1553859769725620265/IMG_6775.png?ex=6abac82e&is=6ab976ae&hm=e2d77112784c0bff5ecc7167e11e972660d1b96e92492faabab0e281f7179006&"
+                  alt="Us 3"
+                >
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- FINAL PAGE BUTTON -->
+          <div class="btnRow">
+
+            <button class="primary" onclick="go(3)">
+              Final Page 💗
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PAGE 3 / FINAL PAGE -->
+      <section class="screen" id="s3">
+
+        <div class="topTag">
+          💗 Final page
+        </div>
+
+        <h1>
+          One final thing
+        </h1>
+
+        <p id="finalText">
+          Thank you for being with me, you're so perfect and more than I deserve.
+          You make everyday the best day ever.
+        </p>
+
+        <p>
+          I love you
+          <span style="font-weight:900; color:var(--accent)">
+            so
+          </span>
+          much.
+        </p>
+
+        <div class="btnRow">
+
+          <button class="primary" onclick="confettiBlast()">
+            Confetti 🎉
+          </button>
+
+          <button class="ghost" onclick="go(2)">
+            Back ⟵
+          </button>
+
+        </div>
+
+        <div class="footerHint">
+          Made with love from your husband💘
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+
+
+  <!-- NOTE MODAL -->
+  <div class="modal" id="modal">
+
+    <div class="modalInner">
+
+      <div class="modalHeader">
+
+        <h2 id="noteTitle">
+          Open when…
+        </h2>
+
+        <button class="ghost x" onclick="closeNote()">
+          ✕
+        </button>
+
+      </div>
+
+      <div class="noteText" id="noteBody"></div>
+
+      <div class="btnRow" style="margin-top:14px">
+
+        <button class="primary" onclick="closeNote()">
+          Close 💗
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const girlfriendName = "My Princess";
+
+
+    const notes = {
+
+      sad:
+`Hii my pretty girl.
+I'll always be here with you and you're more than enough for me.
+whatever struggles you have just lay them on me, I love you 💕`,
+
+      miss:
+`I miss you too baby, every second of the day
+I'm always thinking about you, one day we'll be together
+Try hugging your pillow and imagine its me. 😼💗`,
+
+      stress:
+`Theres no need to be stressed angel.
+You can always talk to me about your problems, im always here.
+If I'm not here try take some deep breaths, I love you. 😽💕`,
+
+      kiss:
+`MWAH
+MWAH
+MWAH
+I'd give you many more if i could 😘`,
+
+      hungry:
+`You better eat baby😡 your body is so perfect, please don't worry about that
+I'll always love you no matter what you look like`,
+
+      motiv:
+`You're amazing baby.
+You can do anything you put your mind to
+And you can always text me if you need help I love you. 💖`
+
+    };
+
+
+    document.getElementById("gfName").textContent = girlfriendName;
+    document.getElementById("gfNameTop").textContent = girlfriendName;
+
+
+    function go(n){
+
+      document
+        .querySelectorAll(".screen")
+        .forEach(s => s.classList.remove("active"));
+
+      document
+        .getElementById("s"+n)
+        .classList.add("active");
+
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+
+    }
+
+
+    function openNote(title, body){
+
+      document.getElementById("noteTitle").textContent = title;
+
+      document.getElementById("noteBody").textContent = body;
+
+      document.getElementById("modal").classList.add("active");
+
+    }
+
+
+    function closeNote(){
+
+      document.getElementById("modal").classList.remove("active");
+
+    }
+
+
+    let heartInterval = null;
+
+
+    function spawnHeart(){
+
+      const h = document.createElement("div");
+
+      h.className = "heart";
+
+
+      const size = 10 + Math.random()*18;
+
+      const left = Math.random()*100;
+
+      const dur = 5 + Math.random()*6;
+
+
+      const colors = [
+        "#ff2d78",
+        "#ff5fa2",
+        "#ff7ab7",
+        "#ffffff",
+        "#ff3d3d",
+        "#ffb6c1",
+        "#7a1cff"
+      ];
+
+
+      h.style.color =
+        colors[Math.floor(Math.random()*colors.length)];
+
+      h.style.left = left + "vw";
+
+      h.style.bottom =
+        (-10 - Math.random()*20) + "vh";
+
+      h.style.setProperty(
+        "--s",
+        (size/18).toFixed(2)
+      );
+
+      h.style.animationDuration =
+        dur + "s";
+
+
+      document
+        .getElementById("hearts")
+        .appendChild(h);
+
+
+      setTimeout(
+        () => h.remove(),
+        dur*1000
+      );
+
+    }
+
+
+    function startHearts(){
+
+      if(heartInterval) return;
+
+      heartInterval =
+        setInterval(spawnHeart, 180);
+
+      for(let i=0;i<18;i++)
+        setTimeout(spawnHeart, i*60);
+
+    }
+
+
+    function stopHearts(){
+
+      clearInterval(heartInterval);
+
+      heartInterval = null;
+
+    }
+
+
+    function toggleHearts(){
+
+      if(heartInterval)
+        stopHearts();
+      else
+        startHearts();
+
+    }
+
+
+    startHearts();
+
+
+    function confettiBlast(){
+
+      const box =
+        document.getElementById("confetti");
+
+      box.style.display = "block";
+
+
+      for(let i=0;i<140;i++){
+
+        const c =
+          document.createElement("div");
+
+        c.className = "conf";
+
+        c.style.left =
+          Math.random()*100 + "vw";
+
+        c.style.top =
+          (-10 - Math.random()*30) + "vh";
+
+        c.style.animationDuration =
+          (3 + Math.random()*3.5) + "s";
+
+        c.style.transform =
+          `rotate(${Math.random()*360}deg)`;
+
+
+        const colors = [
+          "#ff2d78",
+          "#ff5fa2",
+          "#ff7ab7",
+          "#7a1cff",
+          "#ffffff",
+          "#ff3d3d"
+        ];
+
+
+        c.style.background =
+          colors[Math.floor(Math.random()*colors.length)];
+
+
+        box.appendChild(c);
+
+
+        setTimeout(
+          () => c.remove(),
+          7000
+        );
+
+      }
+
+
+      setTimeout(
+        () => {
+          box.style.display = "none";
+        },
+        4500
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
